@@ -25,29 +25,14 @@ $(function () {
     });
 });
 
+// Global variables
 var outputArray;
 var outputString;
 var bullet = "-";
 
-//j only needed here for "depth", to get right amount of pre-line dashes
-function prepareString(arr, i, j) {
-    while (i < arr.length) {
-        if (arr[i].constructor === Array) {
-            j++;
-            prepareString(arr[i], 0, j);
-            j--;
-        }
-        else {
-            var bull = (j == 0 ? "" : bullet.repeat(j) + " ");
-            outputString += bull + arr[i] + "\n";
-        }
-        i++;
-    }
-}
-
 function convertString(str, outArr, i, strCurr) {
 
-    // Loop for each major number (each row in the table)  
+    // Loop over each character
     while (i < str.length) {
 
         // If a delimiter has been hit 
@@ -62,7 +47,7 @@ function convertString(str, outArr, i, strCurr) {
 
         // If sub array start
         if (str[i] == "(") {
-            // Create a new array
+            // Create a new subarray
             var subArr = [];
             outArr.push(subArr);
 
@@ -84,4 +69,22 @@ function convertString(str, outArr, i, strCurr) {
     }
 
     return i;
+}
+
+// Originally the above function  did all recursion and display
+// This second function added to separate out display from array work (and possibly do bonus sorting)
+function prepareString(arr, i, j) {
+    while (i < arr.length) {
+        if (arr[i].constructor === Array) {
+            //"j" here to track depth, to get right amount of pre-line dashes
+            j++;
+            prepareString(arr[i], 0, j);
+            j--;
+        }
+        else {
+            var bull = (j == 0 ? "" : bullet.repeat(j) + " ");
+            outputString += bull + arr[i] + "\n";
+        }
+        i++;
+    }
 }

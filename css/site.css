@@ -15,6 +15,7 @@ body {
 
 pre {
     margin: 6px;
+    font-size: 1rem;
 }
 
 /* JHeiner 8/31/2017: When involving Visual Studio solution or middle tier team
@@ -72,11 +73,11 @@ pre {
 }
 
 .section:first-child {
-    width: 30%;
+    width: 38%;
 }
 
 .section:not(:first-child) {
-    width: 19%;
+    width: 24.5%;
 }
 
     .section h2 {
@@ -143,7 +144,6 @@ a {
     height: 200px;
     padding: 10px;
     /*font-family: monospace;*/
-    font-size: 10pt;
 }
 
 input, button {
