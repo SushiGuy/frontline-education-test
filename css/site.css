@@ -13,6 +13,10 @@ body {
     position: relative;
 }
 
+pre {
+    margin: 6px;
+}
+
 /* JHeiner 8/31/2017: When involving Visual Studio solution or middle tier team
     the sub items below would best be re-written for LESS or SCSS (SASS) */
 #header {
