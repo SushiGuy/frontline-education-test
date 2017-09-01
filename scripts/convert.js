@@ -8,39 +8,46 @@ $(function () {
     $("#startButton").on("click", function () {
         var inputString = $("#inputString").val();
         //Initialize global objects (prevents result duplicate stacking after first run)
-        var gArray = [];
-        gOutputString = "";
+        var outputArray = [];
+        //gOutputString = "";
 
-        //Trim off first paren
+        //Trim off first paren (parens trigger new subarray, but we want to start with level 0)
         inputString = inputString.substring(1, inputString.length);
-        convertString(inputString, gArray, 0, 0, "");
-        displayArray(gArray);
+        convertString(inputString, outputArray, 0, 0, "");
+        displayArray(outputArray);
     });
 });
 
 //"g" for global variable - declare outside of recursive loop to preserve state
 //var gOutputString;
-var gArray;
+//var gArray = [];
 //var gBullet = "-";
 
-function displayArray(gArray) {
+function displayArray(arr) {
     var output = "";
-    for (i = 0; i < gArray.length; i++) {
-        if (gArray[i].constructor === Array) {
-            for (j = 0; j < gArray[i].length; j++) {
-                //output += gArray[i][j] + "\n";
-                output += gArray[i][j] + " - i/j = " + i + "/" + j + "\n";
+    var bullet = "-";
+    //var bullet = (arrDep == 0 ? "" : gBullet.repeat(arrDep) + " "); 
+    //debugger;
+    //var depth = 0;
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i].constructor === Array) {
+            //depth++;
+            for (j = 0; j < arr[i].length; j++) {
+                output += arr[i][j] + "\n";
+                //output += bullet + " " + arr[i][j] + "\n";
+                //output += arr[i][j] + " - i/j = " + i + "/" + j + " depth " + depth + "\n";
             }
         }
         else {
-            output += gArray[i] + " - i = " + i + "\n";
+            output += arr[i] + "\n";
+            //output += arr[i] + " - i = " + i + "\n";
         }
     }
-    //$("#output").html(gArray.join("\n"));
+    //$("#output").html(arr.join("\n"));
     $("#output").html(output);
 }
 
-function convertString(str, arr, i, arrDep, strCurr) {
+function convertString(str, arr, i, j, strCurr) {
 
     // Loop for each major number (each row in the table)  
     while (i < str.length) {
@@ -60,29 +67,29 @@ function convertString(str, arr, i, arrDep, strCurr) {
 
         //If array start
         if (str[i] == "(") {
-            arrDep++;
+            j++;
             // Create a new array
-            var arr2 = arr[arrDep] = [];
+            var subArr = [];
+            arr.push(subArr);
 
-            //Recurse
-            i = convertString(str, arr2, i + 1, arrDep, strCurr);
+            //Recurse into subarray
+            i = convertString(str, subArr, i + 1, j, strCurr);
 
             //After recursion returns, decrement depth
-            arrDep--;
+            j--;
         }
-
         //If array end, exit recursive call / loop
         else if (str[i] == ")") {
             return i + 1;
         }
-        else {
-            //Aplhabetic character
-            if (str[i] != ",") {
-                strCurr += str[i];
-            }
-            i++;
+        else if (str[i] == ",") {
+            //No action
         }
-
+        //Alphabetic character
+        else {
+            strCurr += str[i];
+        }
+        i++;
     }
     return i;
 }
