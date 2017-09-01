@@ -7,24 +7,45 @@ $(function () {
 
     $("#startButton").on("click", function () {
         var inputString = $("#inputString").val();
-        // Initialize global objects (prevents result duplicate stacking after first run)
+        // Re-initialize global objects for subsequent runs
+        outputArray = []; 
         outputString = "";
 
         // Trim off first paren (parens trigger next recursion, but we want to start with level 0)
         inputString = inputString.substring(1, inputString.length);
 
         // Main
-        convertString(inputString, 0, 0, "");
+        convertString(inputString, outputArray, 0, "");
+
+        // Prepare for display
+        prepareString(outputArray, 0, 0);
 
         // Display results
         $("#output").hide().html(outputString).fadeIn();
     });
 });
 
+var outputArray;
 var outputString;
 var bullet = "-";
 
-function convertString(str, i, j, strCurr) {
+//j only needed here for "depth", to get right amount of pre-line dashes
+function prepareString(arr, i, j) {
+    while (i < arr.length) {
+        if (arr[i].constructor === Array) {
+            j++;
+            prepareString(arr[i], 0, j);
+            j--;
+        }
+        else {
+            var bull = (j == 0 ? "" : bullet.repeat(j) + " ");
+            outputString += bull + arr[i] + "\n";
+        }
+        i++;
+    }
+}
+
+function convertString(str, outArr, i, strCurr) {
 
     // Loop for each major number (each row in the table)  
     while (i < str.length) {
@@ -34,22 +55,19 @@ function convertString(str, i, j, strCurr) {
             // If string builder has a value 
             if (strCurr.length > 0) { 
                 // Push to output and reinitialize string builder 
-                // arr.push(strCurr);
-                var bull = (j == 0 ? "" : bullet.repeat(j) + " ");
-                outputString += bull + strCurr + "\n";
+                outArr.push(strCurr);
                 strCurr = ""; 
             } 
         } 
 
         // If sub array start
         if (str[i] == "(") {
-            j++;
+            // Create a new array
+            var subArr = [];
+            outArr.push(subArr);
 
             // Recurse into subarray
-            i = convertString(str, i + 1, j, strCurr);
-
-            // After recursion returns, decrement depth
-            j--;
+            i = convertString(str, subArr, i + 1, strCurr);
         }
         // If array end, exit recursive call / loop
         else if (str[i] == ")") {
