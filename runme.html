@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Frontline Coding Challenge</title>
+
+    <!-- JHeiner 8/31/2017: Insight, per W3C specs Void Elements like "img" & "link" do not need an end tag -->
+    <link rel="stylesheet" type="text/css" href="css/site.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+
+    <!-- JHeiner 8/31/2017: Note, in many cases scripts can be moved to page bottom to improve page load and render time -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- JHeiner 8/31/2017: Note, put scripts in own JS for maintainability -->
+    <script src="scripts/convert.js"></script>
+</head>
+<body>
+
+    <div id="header">
+        <h1>String Convert</h1>
+        <span>
+            Sr. Software UI Developer coding challenge for <span style="display: inline; padding:0; color: #65BE39;">Jeremy Heiner</span>
+        </span>
+        <p><span style="padding: 0;">Click Start button to begin</span>&nbsp;</p>
+    </div>
+
+    <div id="main">
+        <div class="section first">
+            <h2>Ready to go!</h2>
+
+            <input type="text" readonly id="inputString"
+                   value="(id,created,employee(id,firstname,employeeType(id),lastname),location)" />
+            <br /><button id="startButton">Start</button>
+
+            <h3 style="margin-top: 64px;">Project Details</h3>
+            <ul>
+                <li><em>Goal: Convert given input string to given output string</em></li>
+                <li><em>Bonus: Sort alphabetically</em></li>
+                <li>JavaScript, HTML5 &amp; CSS3</li>
+                <li>jQuery 3.2.1 reference over CDN</li>
+                <li>Visual Studio 2015 Professional</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Output</h2>
+
+            <pre id="output" class="outputBlock">
+Waiting to start...
+            </pre>
+        </div>
+
+        <div class="section">
+            <h2>Expected</h2>
+
+            <pre id="expected" class="outputBlock subtle">
+id
+created
+employee
+- id
+- firstname
+- employeeType
+-- id
+- lastname
+location
+            </pre>
+        </div>
+
+        <div class="section last">
+            <h2>Bonus (sorted)</h2>
+
+            <pre id="expected" class="outputBlock subtle">
+created
+employee
+- employeeType
+-- id
+- firstname
+- id
+- lastname
+id
+location
+            </pre>
+        </div>
+
+        <div id="footer">
+            <p>&copy;2017 Jeremy Heiner</p>
+        </div>
+    </div>
+
+</body>
+</html>
