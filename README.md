@@ -53,4 +53,4 @@ location
 *Screenshot*
 ![People Search Application][appscreenshot]
 
-[appscreenshot]: https://github.com/SushiGuy/health-catalyst-test/blob/master/PeopleSearch/PeopleSearchScreenshot.PNG?raw=true "Web App Screenshot"
+[appscreenshot]: https://github.com/SushiGuy/frontline-education-test/blob/master/screenshot.png?raw=true "Web App Screenshot"
